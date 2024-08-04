@@ -1,0 +1,21 @@
+version: "3"
+services:
+  local-dev:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: kaggle-dev-environment-leap
+    container_name: kaggle-dev-container-leap
+    shm_size: 120g
+    ports:
+      - "127.0.0.1:9896:9896"
+    tty: true
+    stdin_open: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    volumes:
+      - .:/workspace/working
